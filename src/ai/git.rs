@@ -1,6 +1,4 @@
-use clap::builder::Str;
-
-fn git_stage_filenames() -> Vec<String> {
+pub fn git_stage_filenames() -> Vec<String> {
     let output = std::process::Command::new("git")
         .args(["diff", "--cached", "--no-ext-diff", "--diff-algorithm=minimal", "--name-only"]).output().unwrap();
 
@@ -16,7 +14,7 @@ fn git_stage_filenames() -> Vec<String> {
     return filenames;
 }
 
-fn git_stage_diff() -> String {
+pub fn git_stage_diff() -> String {
     let output = std::process::Command::new("git")
         .args(["diff", "--cached", "--no-ext-diff", "--diff-algorithm=minimal"]).output().unwrap();
 
@@ -25,6 +23,17 @@ fn git_stage_diff() -> String {
     }
 
     return String::from_utf8(output.stdout).unwrap();
+}
+
+pub fn git_commit(message: &str) {
+    let output = std::process::Command::new("git")
+        .args(["commit", "-m", message]).output().unwrap();
+
+    if output.status.success() {
+        println!("commit success")
+    } else {
+        println!("commit failed")
+    }
 }
 
 #[cfg(test)]
