@@ -25,5 +25,5 @@ To get started with GitBuddy, follow these simple steps:
 Using GitBuddy is straightforward. After making your changes, run the following command to generate a commit message:
 
 ```sh
-// TODO
+gitbuddy ai
 ```
