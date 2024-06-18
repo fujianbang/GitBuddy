@@ -1,5 +1,7 @@
 # GitBuddy
 
+[![Rust CI](https://github.com/fujianbang/GitBuddy/actions/workflows/rust.yaml/badge.svg)](https://github.com/fujianbang/GitBuddy/actions/workflows/rust.yaml)
+
 GitBuddy is an AI-driven tool designed to simplify your Git commit process. With GitBuddy, you can generate meaningful commit messages, streamline your workflow, and enhance your productivity.
 
 ## Features
