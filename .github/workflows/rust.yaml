@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
 
     steps:
@@ -45,5 +45,44 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v3
         with:
-          name: my-rust-binary
+          name: gitbuddy-linux
           path: target/release/gitbuddy
+
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+
+      - name: Cache cargo registry
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-registry-
+
+      - name: Cache cargo index
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-index-
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: gitbuddy-windows
+          path: target/release/gitbuddy.exe
